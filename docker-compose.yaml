@@ -1,0 +1,53 @@
+networks:
+  local:
+    driver: bridge
+
+services:
+  api:
+    build: .
+    container_name: "api"
+    command: sh -c "uvicorn main:app --reload --host=0.0.0.0"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ".env"
+    networks:
+      - local
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16.4
+    container_name: "database"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - local
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    depends_on:
+      - database
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      GUNICORN_ACCESS_LOGFILE: '/dev/null'
+    user: '$UID:$GID'
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    networks:
+      - local
+    logging:
+      driver: none
