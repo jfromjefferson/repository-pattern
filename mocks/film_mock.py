@@ -24,7 +24,7 @@ class MockFilmRepository(Repository[Film]):
         return True
 
     def update(self, id: int, **kwargs: object) -> bool:
-        if id:
+        if not id:
             return False
 
         self.films[id] = Film(**kwargs)
