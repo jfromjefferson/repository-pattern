@@ -9,7 +9,7 @@ class Repository[T](ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_all(self, limit: int, offset: int) -> list[T]:
+    def get_all(self, limit: int = 100, offset: int = 0) -> list[T]:
         raise NotImplementedError
 
     @abstractmethod
@@ -17,7 +17,7 @@ class Repository[T](ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, **kwargs: object) -> bool:
+    def update(self, id: int, **kwargs: object) -> bool:
         raise NotImplementedError
 
     @abstractmethod

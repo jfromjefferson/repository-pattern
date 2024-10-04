@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Query, Path, HTTPException
-from fastapi.responses import JSONResponse
 
 from repositories.film_repository import FilmRepository
 

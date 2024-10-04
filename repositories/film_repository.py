@@ -47,5 +47,5 @@ class FilmRepository(Repository[Film]):
 
             return film_list
 
-    def update(self, **kwargs: object) -> bool:
+    def update(self, id: int, **kwargs: object) -> bool:
         ...
