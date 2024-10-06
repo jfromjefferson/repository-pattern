@@ -35,7 +35,6 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
-    restart: always
     depends_on:
       - database
     environment:
